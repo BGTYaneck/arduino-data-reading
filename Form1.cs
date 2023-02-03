@@ -22,13 +22,15 @@ namespace Swiatelka
         {
             InitializeComponent();
             status = new bool[4];
-            button8.Enabled = false;
-            button9.Enabled = false;
-            button10.Enabled = false;
-            button11.Enabled = false;
-            button12.Enabled = false;
-            button13.Enabled = false;
-            button14.Enabled = false;
+            tabControl1.TabPages.Remove(tabPage9);
+            tabControl1.TabPages.Remove(tabPage2);
+            //---------------------------------------
+            tabControl1.TabPages.Remove(tabPage3);
+            tabControl1.TabPages.Remove(tabPage4);
+            tabControl1.TabPages.Remove(tabPage5);
+            tabControl1.TabPages.Remove(tabPage6);
+            tabControl1.TabPages.Remove(tabPage7);
+            tabControl1.TabPages.Remove(tabPage8);
         }
 
 
@@ -49,15 +51,13 @@ namespace Swiatelka
                 if (!_serialPort.IsOpen)
                 {
                     _serialPort.Open();
-                    button8.Enabled = true;
-                    button9.Enabled = true;
-                    button10.Enabled = true;
-                    button11.Enabled = true;
-                    button12.Enabled = true;
-                    button13.Enabled = true;
-                    button14.Enabled = true;
-                    (tabControl1.TabPages[0] as TabPage).Enabled = true;
-
+                    tabControl1.TabPages.Add(tabPage9);
+                    tabControl1.TabPages.Add(tabPage2);
+                    List<Button> btn = groupBox3.Controls.OfType<Button>().ToList();
+                    foreach (var b in btn)
+                    {
+                        b.Enabled = false;
+                    }
 
                 }
             }
@@ -69,81 +69,73 @@ namespace Swiatelka
         
         public void button8_Clicked(object sender, EventArgs e)
         {
-            if (tabPage3.Enabled == false)
+            if (!tabControl1.TabPages.Contains(tabPage3))
             {
-                tabPage3.Enabled = true;
+                tabControl1.TabPages.Add(tabPage3);
             }
             else
             {
-                tabPage3.Enabled = false;
+                tabControl1.TabPages.Remove(tabPage3);
             }
         }
 
         public void button9_Clicked(object sender, EventArgs e)
         {
-            if (tabPage4.Enabled == false)
+            if (!tabControl1.TabPages.Contains(tabPage4))
             {
-                tabPage4.Enabled = true;
+                tabControl1.TabPages.Add(tabPage4);
             }
             else
             {
-                tabPage4.Enabled = false;
+                tabControl1.TabPages.Remove(tabPage4);
             }
-    }
+        }
         public void button10_Clicked(object sender, EventArgs e)
         {
-            if (tabPage5.Enabled == false)
+            if (!tabControl1.TabPages.Contains(tabPage5))
             {
-                tabPage5.Enabled = true;
+                tabControl1.TabPages.Add(tabPage5);
             }
             else
             {
-                tabPage5.Enabled = false;
+                tabControl1.TabPages.Remove(tabPage5);
             }
         }
         public void button11_Clicked(object sender, EventArgs e)
         {
-            if (tabPage6.Enabled == false)
+            if (!tabControl1.TabPages.Contains(tabPage6))
             {
-                tabPage6.Enabled = true;
+                tabControl1.TabPages.Add(tabPage6);
             }
             else
             {
-                tabPage6.Enabled = false;
+                tabControl1.TabPages.Remove(tabPage6);
             }
         }
         public void button12_Clicked(object sender, EventArgs e)
         {
-            if (tabPage7.Enabled == false)
+            if (!tabControl1.TabPages.Contains(tabPage7))
             {
-                tabPage7.Enabled = true;
+                tabControl1.TabPages.Add(tabPage7);
             }
             else
             {
-                tabPage7.Enabled = false;
+                tabControl1.TabPages.Remove(tabPage7);
             }
         }
         public void button13_Clicked(object sender, EventArgs e)
         {
-            if (tabPage8.Enabled == false)
+            if (!tabControl1.TabPages.Contains(tabPage8))
             {
-                tabPage8.Enabled = true;
+                tabControl1.TabPages.Add(tabPage8);
             }
             else
             {
-                tabPage8.Enabled = false;
+                tabControl1.TabPages.Remove(tabPage8);
             }
-        }
-        public void button14_Clicked(object sender, EventArgs e)
-        {
-            foreach (TabPage tab in tabControl1.TabPages)
-            {
-                tab.Enabled = false;
-            }
-
         }
         
-
+        /*Relays---------------------------------------------------------------*/
         public void lightsControl(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -241,14 +233,6 @@ namespace Swiatelka
             button3.BackColor = Color.Red;
             button4.BackColor = Color.Red;
             button5.BackColor = Color.Red;
-        }
-
-        private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
-        {
-            if (!e.TabPage.Enabled)
-            {
-                e.Cancel = true;
-            }
         }
     }
 }
