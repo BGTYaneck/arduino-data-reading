@@ -37,7 +37,7 @@ namespace Swiatelka
         private void Form1_Load(object sender, EventArgs e)
         {
             _serialPort = new SerialPort();
-            _serialPort.BaudRate = 9600;
+            _serialPort.BaudRate = 57600;
             _serialPort.Parity = Parity.None;
             _serialPort.DataBits = 8;
             _serialPort.ReadTimeout = 500;
@@ -53,10 +53,12 @@ namespace Swiatelka
                     _serialPort.Open();
                     tabControl1.TabPages.Add(tabPage9);
                     tabControl1.TabPages.Add(tabPage2);
+
                     List<Button> btn = groupBox3.Controls.OfType<Button>().ToList();
+
                     foreach (var b in btn)
                     {
-                        b.Enabled = false;
+                        b.Enabled = true;
                     }
 
                 }
@@ -67,7 +69,7 @@ namespace Swiatelka
             }
         }
         
-        public void button8_Clicked(object sender, EventArgs e)
+        public void tab3_Control(object sender, EventArgs e)
         {
             if (!tabControl1.TabPages.Contains(tabPage3))
             {
@@ -79,7 +81,7 @@ namespace Swiatelka
             }
         }
 
-        public void button9_Clicked(object sender, EventArgs e)
+        public void tab4_Control(object sender, EventArgs e)
         {
             if (!tabControl1.TabPages.Contains(tabPage4))
             {
@@ -90,7 +92,7 @@ namespace Swiatelka
                 tabControl1.TabPages.Remove(tabPage4);
             }
         }
-        public void button10_Clicked(object sender, EventArgs e)
+        public void tab5_Control(object sender, EventArgs e)
         {
             if (!tabControl1.TabPages.Contains(tabPage5))
             {
@@ -101,7 +103,7 @@ namespace Swiatelka
                 tabControl1.TabPages.Remove(tabPage5);
             }
         }
-        public void button11_Clicked(object sender, EventArgs e)
+        public void tab6_Control(object sender, EventArgs e)
         {
             if (!tabControl1.TabPages.Contains(tabPage6))
             {
@@ -112,7 +114,7 @@ namespace Swiatelka
                 tabControl1.TabPages.Remove(tabPage6);
             }
         }
-        public void button12_Clicked(object sender, EventArgs e)
+        public void tab7_Control(object sender, EventArgs e)
         {
             if (!tabControl1.TabPages.Contains(tabPage7))
             {
@@ -123,7 +125,7 @@ namespace Swiatelka
                 tabControl1.TabPages.Remove(tabPage7);
             }
         }
-        public void button13_Clicked(object sender, EventArgs e)
+        public void tab8_Control(object sender, EventArgs e)
         {
             if (!tabControl1.TabPages.Contains(tabPage8))
             {
@@ -148,14 +150,14 @@ namespace Swiatelka
                     {
                         status[0] = true;
                         button2.BackColor = Color.LimeGreen;
-                        _serialPort.Write("1+");
+                        _serialPort.Write("RELAY1ON");
                         History.Items.Add(name + " ON \n");
                     }
                     else
                     {
                         status[0] = false;
                         button2.BackColor = Color.Red;
-                        _serialPort.Write("1-");
+                        _serialPort.Write("RELAY1OFF");
                         History.Items.Add(name + " OFF \n");
                     }
                     break;
@@ -164,14 +166,14 @@ namespace Swiatelka
                     {
                         status[1] = true;
                         button3.BackColor = Color.LimeGreen;
-                        _serialPort.Write("2+");
+                        _serialPort.Write("RELAY2ON");
                         History.Items.Add(name + " ON \n");
                     }
                     else
                     {
                         status[1] = false;
                         button3.BackColor = Color.Red;
-                        _serialPort.Write("2-");
+                        _serialPort.Write("RELAY2OFF");
                         History.Items.Add(name + " OFF \n");
                     }
                     break;
@@ -180,14 +182,14 @@ namespace Swiatelka
                     {
                         status[2] = true;
                         button4.BackColor = Color.LimeGreen;
-                        _serialPort.Write("3+");
+                        _serialPort.Write("RELAY3ON");
                         History.Items.Add(name + " ON \n");
                     }
                     else
                     {
                         status[2] = false;
                         button4.BackColor = Color.Red;
-                        _serialPort.Write("3-");
+                        _serialPort.Write("RELAY3OFF");
                         History.Items.Add(name + " OFF \n");
                     }
                     break;
@@ -196,14 +198,14 @@ namespace Swiatelka
                     {
                         status[3] = true;
                         button5.BackColor = Color.LimeGreen;
-                        _serialPort.Write("4+");
+                        _serialPort.Write("RELAY4ON");
                         History.Items.Add(name + " ON \n");
                     }
                     else
                     {
                         status[3] = false;
                         button5.BackColor = Color.Red;
-                        _serialPort.Write("4-");
+                        _serialPort.Write("RELAY4OFF");
                         History.Items.Add(name + " OFF \n");
 
                     }
@@ -214,7 +216,10 @@ namespace Swiatelka
 
         public void turnAllOn(object sender, EventArgs e)
         {
-            _serialPort.Write("1+ 2+ 3+ 4+");
+            _serialPort.Write("RELAY1ON");
+            _serialPort.Write("RELAY2ON");
+            _serialPort.Write("RELAY3ON");
+            _serialPort.Write("RELAY4ON");
             status = new bool[4] { true, true, true, true };
             History.Items.Add("ALL ON");
             button2.BackColor = Color.LimeGreen;
@@ -226,7 +231,10 @@ namespace Swiatelka
 
         public void turnAllOff(object sender, EventArgs e)
         {
-            _serialPort.Write("1- 2- 3- 4-");
+            _serialPort.Write("RELAY1OFF");
+            _serialPort.Write("RELAY2OFF");
+            _serialPort.Write("RELAY3OFF");
+            _serialPort.Write("RELAY4OFF");
             status = new bool[4];
             History.Items.Add("ALL OFF");
             button2.BackColor = Color.Red;

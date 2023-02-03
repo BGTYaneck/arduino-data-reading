@@ -342,7 +342,7 @@
             this.button13.TabIndex = 5;
             this.button13.Text = "Temperature Sensor";
             this.button13.UseVisualStyleBackColor = true;
-            this.button13.Click += new System.EventHandler(this.button13_Clicked);
+            this.button13.Click += new System.EventHandler(this.tab8_Control);
             // 
             // button12
             // 
@@ -354,7 +354,7 @@
             this.button12.TabIndex = 4;
             this.button12.Text = "Illuminance Sensor";
             this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Clicked);
+            this.button12.Click += new System.EventHandler(this.tab7_Control);
             // 
             // button11
             // 
@@ -366,7 +366,7 @@
             this.button11.TabIndex = 3;
             this.button11.Text = "Distance Sensor";
             this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Clicked);
+            this.button11.Click += new System.EventHandler(this.tab6_Control);
             // 
             // button10
             // 
@@ -378,7 +378,7 @@
             this.button10.TabIndex = 2;
             this.button10.Text = "PIR Sensor";
             this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Clicked);
+            this.button10.Click += new System.EventHandler(this.tab5_Control);
             // 
             // button9
             // 
@@ -390,7 +390,7 @@
             this.button9.TabIndex = 1;
             this.button9.Text = "Pressure Sensor";
             this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Clicked);
+            this.button9.Click += new System.EventHandler(this.tab4_Control);
             // 
             // button8
             // 
@@ -402,7 +402,7 @@
             this.button8.TabIndex = 0;
             this.button8.Text = "Humidity Sensor";
             this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Clicked);
+            this.button8.Click += new System.EventHandler(this.tab3_Control);
             // 
             // tabPage2
             // 
