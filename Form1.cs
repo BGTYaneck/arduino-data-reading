@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.Remoting.Channels;
 using System.Xml.Linq;
+using Newtonsoft.Json;
+using static System.Net.Mime.MediaTypeNames;
+using ArduinoControls;
+using Newtonsoft.Json.Linq;
 
 namespace Swiatelka
 {
@@ -36,18 +40,20 @@ namespace Swiatelka
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            comboBox1.Text = "57600";
             _serialPort = new SerialPort();
-            _serialPort.BaudRate = 57600;
             _serialPort.Parity = Parity.None;
             _serialPort.DataBits = 8;
             _serialPort.ReadTimeout = 500;
             _serialPort.WriteTimeout = 500;
+            _serialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedEventHandler);
         }
         private void button1_Click(object sender, EventArgs e)
         {
             try
             {
                 _serialPort.PortName = textBox1.Text;
+                _serialPort.BaudRate = Convert.ToInt32(comboBox1.Text);
                 if (!_serialPort.IsOpen)
                 {
                     _serialPort.Open();
@@ -55,7 +61,6 @@ namespace Swiatelka
                     tabControl1.TabPages.Add(tabPage2);
 
                     List<Button> btn = groupBox3.Controls.OfType<Button>().ToList();
-
                     foreach (var b in btn)
                     {
                         b.Enabled = true;
@@ -65,7 +70,7 @@ namespace Swiatelka
             }
             catch
             {
-                MessageBox.Show("Please enter the correct Port Address");
+                MessageBox.Show("Error! - Can't connect to selected Port.");
             }
         }
         
@@ -150,14 +155,14 @@ namespace Swiatelka
                     {
                         status[0] = true;
                         button2.BackColor = Color.LimeGreen;
-                        _serialPort.Write("RELAY1ON");
+                        _serialPort.Write("RELAY1ON\n");
                         History.Items.Add(name + " ON \n");
                     }
                     else
                     {
                         status[0] = false;
                         button2.BackColor = Color.Red;
-                        _serialPort.Write("RELAY1OFF");
+                        _serialPort.Write("RELAY1OFF\n");
                         History.Items.Add(name + " OFF \n");
                     }
                     break;
@@ -166,14 +171,14 @@ namespace Swiatelka
                     {
                         status[1] = true;
                         button3.BackColor = Color.LimeGreen;
-                        _serialPort.Write("RELAY2ON");
+                        _serialPort.Write("RELAY2ON\n");
                         History.Items.Add(name + " ON \n");
                     }
                     else
                     {
                         status[1] = false;
                         button3.BackColor = Color.Red;
-                        _serialPort.Write("RELAY2OFF");
+                        _serialPort.Write("RELAY2OFF\n");
                         History.Items.Add(name + " OFF \n");
                     }
                     break;
@@ -182,14 +187,14 @@ namespace Swiatelka
                     {
                         status[2] = true;
                         button4.BackColor = Color.LimeGreen;
-                        _serialPort.Write("RELAY3ON");
+                        _serialPort.Write("RELAY3ON\n");
                         History.Items.Add(name + " ON \n");
                     }
                     else
                     {
                         status[2] = false;
                         button4.BackColor = Color.Red;
-                        _serialPort.Write("RELAY3OFF");
+                        _serialPort.Write("RELAY3OFF\n");
                         History.Items.Add(name + " OFF \n");
                     }
                     break;
@@ -198,14 +203,14 @@ namespace Swiatelka
                     {
                         status[3] = true;
                         button5.BackColor = Color.LimeGreen;
-                        _serialPort.Write("RELAY4ON");
+                        _serialPort.Write("RELAY4ON\n");
                         History.Items.Add(name + " ON \n");
                     }
                     else
                     {
                         status[3] = false;
                         button5.BackColor = Color.Red;
-                        _serialPort.Write("RELAY4OFF");
+                        _serialPort.Write("RELAY4OFF\n");
                         History.Items.Add(name + " OFF \n");
 
                     }
@@ -216,10 +221,7 @@ namespace Swiatelka
 
         public void turnAllOn(object sender, EventArgs e)
         {
-            _serialPort.Write("RELAY1ON");
-            _serialPort.Write("RELAY2ON");
-            _serialPort.Write("RELAY3ON");
-            _serialPort.Write("RELAY4ON");
+            _serialPort.Write("RELAY1ON\nRELAY2ON\nRELAY3ON\nRELAY4ON\n");
             status = new bool[4] { true, true, true, true };
             History.Items.Add("ALL ON");
             button2.BackColor = Color.LimeGreen;
@@ -231,16 +233,26 @@ namespace Swiatelka
 
         public void turnAllOff(object sender, EventArgs e)
         {
-            _serialPort.Write("RELAY1OFF");
-            _serialPort.Write("RELAY2OFF");
-            _serialPort.Write("RELAY3OFF");
-            _serialPort.Write("RELAY4OFF");
+            _serialPort.Write("RELAY1OFF\nRELAY2OFF\nRELAY3OFF\nRELAY4OFF\n");
             status = new bool[4];
             History.Items.Add("ALL OFF");
             button2.BackColor = Color.Red;
             button3.BackColor = Color.Red;
             button4.BackColor = Color.Red;
             button5.BackColor = Color.Red;
+        }
+       
+        private void DataReceivedEventHandler(object sender, SerialDataReceivedEventArgs e)
+        {
+            string indata = _serialPort.ReadLine();
+            var data = JsonConvert.DeserializeObject<ArduinoControls.Model>(indata);
+            label2.Text = $"{data.humidity}%";
+            label3.Text = $"{data.temperature}°C";
+            label4.Text = $"{data.pressure / 100}hPa";
+            label5.Text = $"{data.temperature: 0.00}°C";
+            label7.Text = $"{data.distance: 0.0}cm";
+            label8.Text = $"{data.light: 0.00}lx";
+
         }
     }
 }
