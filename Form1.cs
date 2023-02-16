@@ -14,39 +14,36 @@ using System.Xml.Linq;
 using Newtonsoft.Json;
 using static System.Net.Mime.MediaTypeNames;
 using ArduinoControls;
+using System.IO;
 using Newtonsoft.Json.Linq;
 
 namespace Swiatelka
 {
     public partial class Form1 : Form
     {
+        string indata;
         SerialPort _serialPort;
         bool[] status;
+        delegate void SetTextDelegate(string value);
+
         public Form1()
         {
             InitializeComponent();
             status = new bool[4];
-            tabControl1.TabPages.Remove(tabPage9);
-            tabControl1.TabPages.Remove(tabPage2);
-            //---------------------------------------
-            tabControl1.TabPages.Remove(tabPage3);
-            tabControl1.TabPages.Remove(tabPage4);
-            tabControl1.TabPages.Remove(tabPage5);
-            tabControl1.TabPages.Remove(tabPage6);
-            tabControl1.TabPages.Remove(tabPage7);
-            tabControl1.TabPages.Remove(tabPage8);
         }
 
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            comboBox1.Text = "57600";
+            comboBox1.Text = "115200";
             _serialPort = new SerialPort();
+            _serialPort.DtrEnable = true;
             _serialPort.Parity = Parity.None;
             _serialPort.DataBits = 8;
-            _serialPort.ReadTimeout = 500;
-            _serialPort.WriteTimeout = 500;
+            /*_serialPort.ReadTimeout = 500;
+            _serialPort.WriteTimeout = 500;*/
             _serialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedEventHandler);
+            System.IO.File.WriteAllText("C:/Temp/log.txt", string.Empty);
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -57,10 +54,9 @@ namespace Swiatelka
                 if (!_serialPort.IsOpen)
                 {
                     _serialPort.Open();
-                    tabControl1.TabPages.Add(tabPage9);
-                    tabControl1.TabPages.Add(tabPage2);
-
-                    List<Button> btn = groupBox3.Controls.OfType<Button>().ToList();
+                    button14.Enabled = true;
+                    button1.Enabled = false;
+                    List<Button> btn = groupBox1.Controls.OfType<Button>().ToList();
                     foreach (var b in btn)
                     {
                         b.Enabled = true;
@@ -71,74 +67,6 @@ namespace Swiatelka
             catch
             {
                 MessageBox.Show("Error! - Can't connect to selected Port.");
-            }
-        }
-        
-        public void tab3_Control(object sender, EventArgs e)
-        {
-            if (!tabControl1.TabPages.Contains(tabPage3))
-            {
-                tabControl1.TabPages.Add(tabPage3);
-            }
-            else
-            {
-                tabControl1.TabPages.Remove(tabPage3);
-            }
-        }
-
-        public void tab4_Control(object sender, EventArgs e)
-        {
-            if (!tabControl1.TabPages.Contains(tabPage4))
-            {
-                tabControl1.TabPages.Add(tabPage4);
-            }
-            else
-            {
-                tabControl1.TabPages.Remove(tabPage4);
-            }
-        }
-        public void tab5_Control(object sender, EventArgs e)
-        {
-            if (!tabControl1.TabPages.Contains(tabPage5))
-            {
-                tabControl1.TabPages.Add(tabPage5);
-            }
-            else
-            {
-                tabControl1.TabPages.Remove(tabPage5);
-            }
-        }
-        public void tab6_Control(object sender, EventArgs e)
-        {
-            if (!tabControl1.TabPages.Contains(tabPage6))
-            {
-                tabControl1.TabPages.Add(tabPage6);
-            }
-            else
-            {
-                tabControl1.TabPages.Remove(tabPage6);
-            }
-        }
-        public void tab7_Control(object sender, EventArgs e)
-        {
-            if (!tabControl1.TabPages.Contains(tabPage7))
-            {
-                tabControl1.TabPages.Add(tabPage7);
-            }
-            else
-            {
-                tabControl1.TabPages.Remove(tabPage7);
-            }
-        }
-        public void tab8_Control(object sender, EventArgs e)
-        {
-            if (!tabControl1.TabPages.Contains(tabPage8))
-            {
-                tabControl1.TabPages.Add(tabPage8);
-            }
-            else
-            {
-                tabControl1.TabPages.Remove(tabPage8);
             }
         }
         
@@ -241,18 +169,78 @@ namespace Swiatelka
             button4.BackColor = Color.Red;
             button5.BackColor = Color.Red;
         }
-       
+
+        public void SetText(string value)
+        {
+            if (InvokeRequired)
+                try
+                {
+                    Invoke(new SetTextDelegate(SetText), value);
+                }
+                catch { }
+
+            else
+            {
+                try { 
+                    var data = JsonConvert.DeserializeObject<ArduinoControls.Model>(value);
+                    
+                    label2.Text = $"{data.humidity: 0}%";
+                    chart7.Series["Humidity"].Points.Add(Math.Round(Convert.ToDouble(data.humidity)));
+                    
+                    label3.Text = $"{data.temperature: 0}°C";
+                    chart8.Series["Degrees"].Points.Add(Math.Round(Convert.ToDouble(data.temperature)));
+
+                    label4.Text = $"{Convert.ToInt32(data.pressure) / 100: 0}hPa";
+                    chart9.Series["Pressure"].Points.Add(Math.Round(Convert.ToDouble(data.pressure)) / 100);
+
+                    label7.Text = $"{data.distance: 0}cm";
+                    chart11.Series["Distance"].Points.Add(Math.Round(Convert.ToDouble(data.distance)));
+                    
+                    label6.Text = $"{data.altitude}m";
+                    chart13.Series["SeaLevel"].Points.Add(Math.Round(Convert.ToDouble(data.altitude)));
+
+                    label8.Text = $"{data.light}lx";
+                    chart12.Series["Illuminance"].Points.Add(Math.Round(Convert.ToDouble(data.light)));
+
+                }
+                catch (Exception){ return; };
+                
+
+            }
+        }
+
         private void DataReceivedEventHandler(object sender, SerialDataReceivedEventArgs e)
         {
-            string indata = _serialPort.ReadLine();
-            var data = JsonConvert.DeserializeObject<ArduinoControls.Model>(indata);
-            label2.Text = $"{data.humidity}%";
-            label3.Text = $"{data.temperature}°C";
-            label4.Text = $"{data.pressure / 100}hPa";
-            label5.Text = $"{data.temperature: 0.00}°C";
-            label7.Text = $"{data.distance: 0.0}cm";
-            label8.Text = $"{data.light: 0.00}lx";
+            
+            try { 
+                indata = _serialPort.ReadLine();
+                Debug.WriteLine(indata);
+                using (StreamWriter writer = new StreamWriter("C:/Temp/log.txt", append: true))
+                {
+                    writer.WriteLine(indata);
+                }
+                SetText(indata);
+            } catch(Exception) { return; }
+            
 
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            _serialPort.Close();
+            
+            button1.Enabled = true;
+            button14.Enabled = false;
+            List<Button> btn = groupBox1.Controls.OfType<Button>().ToList();
+            foreach (var b in btn)
+            {
+                b.Enabled = false;
+            }
+        }
+        
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _serialPort.Close();
         }
     }
 }

@@ -8,12 +8,12 @@ namespace ArduinoControls
 {
     internal class Model
     {
-        public int humidity { get; set; }
-        public int temperature { get; set; }
-        public int pressure { get; set; }
-        public float altitude { get; set; }
-        public float temperature2 { get; set; }
-        public float  light { get; set; }
-        public float distance { get; set; }
+        public string humidity { get; set; }
+        public string temperature { get; set; }
+        public string pressure { get; set; }
+        public  string altitude { get; set; }
+        public  string temperature2 { get; set; }
+        public   string light { get; set; }
+        public  string distance { get; set; }
     }
 }
