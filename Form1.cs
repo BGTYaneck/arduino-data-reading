@@ -25,11 +25,16 @@ namespace Swiatelka
         SerialPort _serialPort;
         bool[] status;
         delegate void SetTextDelegate(string value);
+        public string[] portNames = SerialPort.GetPortNames();
 
         public Form1()
         {
             InitializeComponent();
             status = new bool[4];
+            foreach(var port in portNames)
+            {
+             comboBox2.Items.Add(port);
+            }
         }
 
 
@@ -49,7 +54,7 @@ namespace Swiatelka
         {
             try
             {
-                _serialPort.PortName = textBox1.Text;
+                _serialPort.PortName = comboBox2.Text;
                 _serialPort.BaudRate = Convert.ToInt32(comboBox1.Text);
                 if (!_serialPort.IsOpen)
                 {
@@ -69,7 +74,20 @@ namespace Swiatelka
                 MessageBox.Show("Error! - Can't connect to selected Port.");
             }
         }
-        
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            _serialPort.Close();
+
+            button1.Enabled = true;
+            button14.Enabled = false;
+            List<Button> btn = groupBox1.Controls.OfType<Button>().ToList();
+            foreach (var b in btn)
+            {
+                b.Enabled = false;
+            }
+        }
+
         /*Relays---------------------------------------------------------------*/
         public void lightsControl(object sender, EventArgs e)
         {
@@ -170,6 +188,8 @@ namespace Swiatelka
             button5.BackColor = Color.Red;
         }
 
+        /*Reading data--------------------------------------------------------*/
+
         public void SetText(string value)
         {
             if (InvokeRequired)
@@ -184,23 +204,35 @@ namespace Swiatelka
                 try { 
                     var data = JsonConvert.DeserializeObject<ArduinoControls.Model>(value);
                     
-                    label2.Text = $"{data.humidity: 0}%";
-                    chart7.Series["Humidity"].Points.Add(Math.Round(Convert.ToDouble(data.humidity)));
-                    
-                    label3.Text = $"{data.temperature: 0}°C";
-                    chart8.Series["Degrees"].Points.Add(Math.Round(Convert.ToDouble(data.temperature)));
+                    label2.Text = $"{data.humidity: 0} [%]";
+                    chart7.Series["Humidity"].Points.Add(Convert.ToInt32(data.humidity));
+                    if (chart7.Series["Humidity"].Points.Count > 10)
+                        chart7.Series["Humidity"].Points.RemoveAt(0);
 
-                    label4.Text = $"{Convert.ToInt32(data.pressure) / 100: 0}hPa";
-                    chart9.Series["Pressure"].Points.Add(Math.Round(Convert.ToDouble(data.pressure)) / 100);
+                    label3.Text = $"{data.temperature: 0} [°C]";
+                    chart8.Series["Degrees"].Points.Add(Convert.ToInt32(data.temperature));
+                    if (chart8.Series["Degrees"].Points.Count > 10)
+                        chart8.Series["Degrees"].Points.RemoveAt(0);
 
-                    label7.Text = $"{data.distance: 0}cm";
-                    chart11.Series["Distance"].Points.Add(Math.Round(Convert.ToDouble(data.distance)));
-                    
-                    label6.Text = $"{data.altitude}m";
-                    chart13.Series["SeaLevel"].Points.Add(Math.Round(Convert.ToDouble(data.altitude)));
+                    label4.Text = $"{Convert.ToInt32(data.pressure) / 100: 0} [hPa]";
+                    chart9.Series["Pressure"].Points.Add(Convert.ToInt32(data.pressure) / 100);
+                    if (chart9.Series["Pressure"].Points.Count > 10)
+                        chart9.Series["Pressure"].Points.RemoveAt(0);
 
-                    label8.Text = $"{data.light}lx";
-                    chart12.Series["Illuminance"].Points.Add(Math.Round(Convert.ToDouble(data.light)));
+                    label7.Text = $"{data.distance: 0} [cm]";
+                    chart11.Series["Distance"].Points.Add(Convert.ToInt32(data.distance));
+                    if (chart11.Series["Distance"].Points.Count > 10)
+                        chart11.Series["Distance"].Points.RemoveAt(0);
+
+                    label6.Text = $"{data.altitude: 0} [m]";
+                    chart13.Series["SeaLevel"].Points.Add(Convert.ToInt32(data.altitude));
+                    if (chart13.Series["SeaLevel"].Points.Count > 10)
+                        chart13.Series["SeaLevel"].Points.RemoveAt(0);
+
+                    label8.Text = $"{data.light: 0} [lx]";
+                    chart12.Series["Illuminance"].Points.Add(Convert.ToInt32(data.light));
+                    if (chart12.Series["Illuminance"].Points.Count > 10)
+                        chart12.Series["Illuminance"].Points.RemoveAt(0);
 
                 }
                 catch (Exception){ return; };
@@ -224,23 +256,11 @@ namespace Swiatelka
             
 
         }
-
-        private void button14_Click(object sender, EventArgs e)
-        {
-            _serialPort.Close();
-            
-            button1.Enabled = true;
-            button14.Enabled = false;
-            List<Button> btn = groupBox1.Controls.OfType<Button>().ToList();
-            foreach (var b in btn)
-            {
-                b.Enabled = false;
-            }
-        }
         
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             _serialPort.Close();
+            
         }
     }
 }

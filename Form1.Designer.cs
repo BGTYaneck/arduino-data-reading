@@ -30,18 +30,18 @@ namespace Swiatelka
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea19 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series19 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea20 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series20 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea21 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series21 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea22 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series22 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea23 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series23 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea24 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series24 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.History = new System.Windows.Forms.ListBox();
             this.button7 = new System.Windows.Forms.Button();
@@ -64,12 +64,13 @@ namespace Swiatelka
             this.label2 = new System.Windows.Forms.Label();
             this.chart7 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.button14 = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart12)).BeginInit();
@@ -84,6 +85,7 @@ namespace Swiatelka
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(15)))), ((int)(((byte)(191)))), ((int)(((byte)(200)))));
+            this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.History);
             this.groupBox1.Controls.Add(this.button7);
             this.groupBox1.Controls.Add(this.button6);
@@ -209,15 +211,17 @@ namespace Swiatelka
             // 
             // chart12
             // 
-            chartArea19.Name = "ChartArea1";
-            this.chart12.ChartAreas.Add(chartArea19);
+            chartArea1.Name = "ChartArea1";
+            this.chart12.ChartAreas.Add(chartArea1);
             this.chart12.Location = new System.Drawing.Point(693, 272);
             this.chart12.Name = "chart12";
-            series19.ChartArea = "ChartArea1";
-            series19.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Kagi;
-            series19.Name = "Illuminance";
-            series19.YValuesPerPoint = 4;
-            this.chart12.Series.Add(series19);
+            this.chart12.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Kagi;
+            series1.Name = "Illuminance";
+            series1.YValuesPerPoint = 4;
+            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chart12.Series.Add(series1);
             this.chart12.Size = new System.Drawing.Size(332, 200);
             this.chart12.TabIndex = 11;
             this.chart12.Text = "chart12";
@@ -230,20 +234,21 @@ namespace Swiatelka
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(332, 33);
             this.label8.TabIndex = 10;
-            this.label8.Text = "000lx";
+            this.label8.Text = "000 [lx]";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // chart11
             // 
-            chartArea20.Name = "ChartArea1";
-            this.chart11.ChartAreas.Add(chartArea20);
-            this.chart11.Location = new System.Drawing.Point(355, 272);
+            chartArea2.Name = "ChartArea1";
+            this.chart11.ChartAreas.Add(chartArea2);
+            this.chart11.Location = new System.Drawing.Point(23, 260);
             this.chart11.Name = "chart11";
             this.chart11.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
-            series20.ChartArea = "ChartArea1";
-            series20.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
-            series20.Name = "Distance";
-            this.chart11.Series.Add(series20);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
+            series2.Name = "Distance";
+            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chart11.Series.Add(series2);
             this.chart11.Size = new System.Drawing.Size(332, 200);
             this.chart11.TabIndex = 9;
             this.chart11.Text = "chart11";
@@ -256,20 +261,22 @@ namespace Swiatelka
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(332, 33);
             this.label7.TabIndex = 8;
-            this.label7.Text = "000cm";
+            this.label7.Text = "000 [cm]";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // chart13
             // 
-            chartArea21.Name = "ChartArea1";
-            this.chart13.ChartAreas.Add(chartArea21);
-            this.chart13.Location = new System.Drawing.Point(17, 272);
+            chartArea3.Name = "ChartArea1";
+            this.chart13.ChartAreas.Add(chartArea3);
+            this.chart13.Location = new System.Drawing.Point(355, 260);
             this.chart13.Name = "chart13";
             this.chart13.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Chocolate;
-            series21.ChartArea = "ChartArea1";
-            series21.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series21.Name = "SeaLevel";
-            this.chart13.Series.Add(series21);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series3.MarkerSize = 100;
+            series3.Name = "SeaLevel";
+            series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chart13.Series.Add(series3);
             this.chart13.Size = new System.Drawing.Size(332, 200);
             this.chart13.TabIndex = 7;
             this.chart13.Text = "chart13";
@@ -282,19 +289,20 @@ namespace Swiatelka
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(332, 33);
             this.label6.TabIndex = 6;
-            this.label6.Text = "00m";
+            this.label6.Text = "00 [m]";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // chart9
             // 
-            chartArea22.Name = "ChartArea1";
-            this.chart9.ChartAreas.Add(chartArea22);
+            chartArea4.Name = "ChartArea1";
+            this.chart9.ChartAreas.Add(chartArea4);
             this.chart9.Location = new System.Drawing.Point(693, 21);
             this.chart9.Name = "chart9";
             this.chart9.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
-            series22.ChartArea = "ChartArea1";
-            series22.Name = "Pressure";
-            this.chart9.Series.Add(series22);
+            series4.ChartArea = "ChartArea1";
+            series4.Name = "Pressure";
+            series4.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chart9.Series.Add(series4);
             this.chart9.Size = new System.Drawing.Size(332, 200);
             this.chart9.TabIndex = 5;
             this.chart9.Text = "chart9";
@@ -307,22 +315,23 @@ namespace Swiatelka
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(332, 33);
             this.label4.TabIndex = 4;
-            this.label4.Text = "0000 hPa";
+            this.label4.Text = "0000 [hPa]";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // chart8
             // 
-            chartArea23.Name = "ChartArea1";
-            this.chart8.ChartAreas.Add(chartArea23);
+            chartArea5.Name = "ChartArea1";
+            this.chart8.ChartAreas.Add(chartArea5);
             this.chart8.Cursor = System.Windows.Forms.Cursors.Default;
             this.chart8.Location = new System.Drawing.Point(355, 21);
             this.chart8.Name = "chart8";
             this.chart8.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
             this.chart8.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            series23.ChartArea = "ChartArea1";
-            series23.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
-            series23.Name = "Degrees";
-            this.chart8.Series.Add(series23);
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
+            series5.Name = "Degrees";
+            series5.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chart8.Series.Add(series5);
             this.chart8.Size = new System.Drawing.Size(332, 200);
             this.chart8.TabIndex = 3;
             this.chart8.Text = "chart8";
@@ -335,7 +344,7 @@ namespace Swiatelka
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(332, 33);
             this.label3.TabIndex = 1;
-            this.label3.Text = "00°C";
+            this.label3.Text = "00 [°C]";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label2
@@ -346,7 +355,7 @@ namespace Swiatelka
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(332, 33);
             this.label2.TabIndex = 0;
-            this.label2.Text = "00%";
+            this.label2.Text = "00 [%]";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // chart7
@@ -354,16 +363,17 @@ namespace Swiatelka
             this.chart7.BorderSkin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(58)))), ((int)(((byte)(58)))));
             this.chart7.BorderSkin.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.LeftRight;
             this.chart7.BorderSkin.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(58)))), ((int)(((byte)(58)))));
-            chartArea24.Name = "ChartArea1";
-            this.chart7.ChartAreas.Add(chartArea24);
+            chartArea6.Name = "ChartArea1";
+            this.chart7.ChartAreas.Add(chartArea6);
             this.chart7.Location = new System.Drawing.Point(17, 21);
             this.chart7.Name = "chart7";
             this.chart7.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            series24.ChartArea = "ChartArea1";
-            series24.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series24.Name = "Humidity";
-            series24.YValuesPerPoint = 2;
-            this.chart7.Series.Add(series24);
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series6.Name = "Humidity";
+            series6.YValuesPerPoint = 2;
+            series6.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chart7.Series.Add(series6);
             this.chart7.Size = new System.Drawing.Size(332, 200);
             this.chart7.TabIndex = 2;
             this.chart7.Text = "chart7";
@@ -371,10 +381,10 @@ namespace Swiatelka
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(15)))), ((int)(((byte)(191)))), ((int)(((byte)(200)))));
+            this.groupBox2.Controls.Add(this.comboBox2);
             this.groupBox2.Controls.Add(this.button14);
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.comboBox1);
-            this.groupBox2.Controls.Add(this.textBox1);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Location = new System.Drawing.Point(9, 12);
@@ -383,6 +393,14 @@ namespace Swiatelka
             this.groupBox2.TabIndex = 11;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Port Connection";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(91, 25);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(103, 24);
+            this.comboBox2.TabIndex = 13;
             // 
             // button14
             // 
@@ -424,14 +442,6 @@ namespace Swiatelka
             this.comboBox1.Size = new System.Drawing.Size(103, 24);
             this.comboBox1.TabIndex = 10;
             // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.textBox1.Location = new System.Drawing.Point(91, 21);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(103, 30);
-            this.textBox1.TabIndex = 7;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -452,6 +462,15 @@ namespace Swiatelka
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(53, 338);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(95, 16);
+            this.label10.TabIndex = 13;
+            this.label10.Text = "Relays History";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -466,6 +485,7 @@ namespace Swiatelka
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart11)).EndInit();
@@ -506,9 +526,10 @@ namespace Swiatelka
         private System.Windows.Forms.Button button14;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label label10;
     }
 }
 
