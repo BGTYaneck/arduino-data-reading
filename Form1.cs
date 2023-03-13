@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Runtime.Remoting.Channels;
-using System.Xml.Linq;
 using Newtonsoft.Json;
-using static System.Net.Mime.MediaTypeNames;
 using ArduinoControls;
 using System.IO;
-using Newtonsoft.Json.Linq;
+using System.Net;
+using System.Net.Sockets;
 
 namespace Swiatelka
 {
@@ -26,15 +20,17 @@ namespace Swiatelka
         bool[] status;
         delegate void SetTextDelegate(string value);
         public string[] portNames = SerialPort.GetPortNames();
+        public UdpHelper _udpHelper;
 
         public Form1()
         {
             InitializeComponent();
             status = new bool[4];
-            foreach(var port in portNames)
+            foreach (var port in portNames)
             {
-             comboBox2.Items.Add(port);
+                comboBox2.Items.Add(port);
             }
+            _udpHelper = new UdpHelper("192.168.0.255", 13347);
         }
 
 
@@ -45,8 +41,6 @@ namespace Swiatelka
             _serialPort.DtrEnable = true;
             _serialPort.Parity = Parity.None;
             _serialPort.DataBits = 8;
-            /*_serialPort.ReadTimeout = 500;
-            _serialPort.WriteTimeout = 500;*/
             _serialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedEventHandler);
             System.IO.File.WriteAllText("C:/Temp/log.txt", string.Empty);
         }
@@ -102,6 +96,7 @@ namespace Swiatelka
                         status[0] = true;
                         button2.BackColor = Color.LimeGreen;
                         _serialPort.Write("RELAY1ON\n");
+                        _= _udpHelper.SendAsync("+1");
                         History.Items.Add(name + " ON \n");
                     }
                     else
@@ -109,6 +104,7 @@ namespace Swiatelka
                         status[0] = false;
                         button2.BackColor = Color.Red;
                         _serialPort.Write("RELAY1OFF\n");
+                        _= _udpHelper.SendAsync("-1");
                         History.Items.Add(name + " OFF \n");
                     }
                     break;
@@ -118,6 +114,7 @@ namespace Swiatelka
                         status[1] = true;
                         button3.BackColor = Color.LimeGreen;
                         _serialPort.Write("RELAY2ON\n");
+                        _= _udpHelper.SendAsync("+2");
                         History.Items.Add(name + " ON \n");
                     }
                     else
@@ -125,6 +122,7 @@ namespace Swiatelka
                         status[1] = false;
                         button3.BackColor = Color.Red;
                         _serialPort.Write("RELAY2OFF\n");
+                        _= _udpHelper.SendAsync("-2");
                         History.Items.Add(name + " OFF \n");
                     }
                     break;
@@ -134,6 +132,7 @@ namespace Swiatelka
                         status[2] = true;
                         button4.BackColor = Color.LimeGreen;
                         _serialPort.Write("RELAY3ON\n");
+                        _= _udpHelper.SendAsync("+3");
                         History.Items.Add(name + " ON \n");
                     }
                     else
@@ -141,6 +140,7 @@ namespace Swiatelka
                         status[2] = false;
                         button4.BackColor = Color.Red;
                         _serialPort.Write("RELAY3OFF\n");
+                        _= _udpHelper.SendAsync("-3");
                         History.Items.Add(name + " OFF \n");
                     }
                     break;
@@ -150,6 +150,7 @@ namespace Swiatelka
                         status[3] = true;
                         button5.BackColor = Color.LimeGreen;
                         _serialPort.Write("RELAY4ON\n");
+                        _= _udpHelper.SendAsync("+4");
                         History.Items.Add(name + " ON \n");
                     }
                     else
@@ -157,6 +158,7 @@ namespace Swiatelka
                         status[3] = false;
                         button5.BackColor = Color.Red;
                         _serialPort.Write("RELAY4OFF\n");
+                        _= _udpHelper.SendAsync("-4");
                         History.Items.Add(name + " OFF \n");
 
                     }
@@ -167,7 +169,8 @@ namespace Swiatelka
 
         public void turnAllOn(object sender, EventArgs e)
         {
-            _serialPort.Write("RELAY1ON\nRELAY2ON\nRELAY3ON\nRELAY4ON\n");
+            _serialPort.Write("RELAY3ON\nRELAY4ON\n");
+            _= _udpHelper.SendAsync("+5");
             status = new bool[4] { true, true, true, true };
             History.Items.Add("ALL ON");
             button2.BackColor = Color.LimeGreen;
@@ -180,6 +183,7 @@ namespace Swiatelka
         public void turnAllOff(object sender, EventArgs e)
         {
             _serialPort.Write("RELAY1OFF\nRELAY2OFF\nRELAY3OFF\nRELAY4OFF\n");
+            _= _udpHelper.SendAsync("-5");
             status = new bool[4];
             History.Items.Add("ALL OFF");
             button2.BackColor = Color.Red;
@@ -192,6 +196,7 @@ namespace Swiatelka
 
         public void SetText(string value)
         {
+
             if (InvokeRequired)
                 try
                 {
@@ -202,6 +207,7 @@ namespace Swiatelka
             else
             {
                 try { 
+
                     var data = JsonConvert.DeserializeObject<ArduinoControls.Model>(value);
                     
                     label2.Text = $"{data.humidity: 0} [%]";
@@ -246,6 +252,7 @@ namespace Swiatelka
             
             try { 
                 indata = _serialPort.ReadLine();
+                _= _udpHelper.SendAsync(indata);
                 Debug.WriteLine(indata);
                 using (StreamWriter writer = new StreamWriter("C:/Temp/log.txt", append: true))
                 {
